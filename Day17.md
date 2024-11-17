@@ -1,29 +1,96 @@
- 654.最大二叉树 
+## 最大二叉树 
+```python
+class Solution:
+    def constructMaximumBinaryTree(self, nums: List[int]) -> Optional[TreeNode]:
+        # construct a Tree with a list
+        if len(nums) ==1:
+            return TreeNode(nums[0])
+        
+        # 找到数组中最大的值和对应的下标
+        maxValue = 0
+        maxValueIndex = 0
+        node = TreeNode(maxValue)
+        for i in range(len(nums)):
+            if nums[i] > maxValue:
+                maxValue = nums[i]
+                maxValueIndex = i
+        node.val = maxValue
+        # 最大值所在的下标左区间 构造左子树
+        if maxValueIndex > 0:
+            new_list = nums[:maxValueIndex]
+            node.left = self.constructMaximumBinaryTree(new_list)
+        # 最大值所在的下标右区间 构造右子树
+        if maxValueIndex < len(nums) - 1:
+            new_list = nums[maxValueIndex+1:]
+            node.right = self.constructMaximumBinaryTree(new_list)
+        return node
+```
 
-又是构造二叉树，昨天大家刚刚做完 中序后序确定二叉树，今天做这个 应该会容易一些， 先看视频，好好体会一下 为什么构造二叉树都是 前序遍历 
+## 合并二叉树 
 
-题目链接/文章讲解：https://programmercarl.com/0654.%E6%9C%80%E5%A4%A7%E4%BA%8C%E5%8F%89%E6%A0%91.html  
-视频讲解：https://www.bilibili.com/video/BV1MG411G7ox  
+```python
+class Solution:
+    def mergeTrees(self, root1: TreeNode, root2: TreeNode) -> TreeNode:
+        # 递归终止条件: 
+        #  但凡有一个节点为空, 就立刻返回另外一个. 如果另外一个也为None就直接返回None. 
+        if not root1: 
+            return root2
+        if not root2: 
+            return root1
+        # ⚠️ 上面的递归终止条件保证了代码执行到这里root1, root2都非空. 
+        # preOrder traversal
+        root1.val += root2.val # 中
+        root1.left = self.mergeTrees(root1.left, root2.left) #左
+        root1.right = self.mergeTrees(root1.right, root2.right) # 右
+        
+        return root1 # ⚠️ 注意: 本题我们重复使用了题目给出的节点而不是创建新节点. 节省时间, 空间. 
+```
 
- 617.合并二叉树 
+## 二叉搜索树中的搜索 
 
-这次是一起操作两个二叉树了， 估计大家也没一起操作过两个二叉树，也不知道该如何一起操作，可以看视频先理解一下。 优先掌握递归。
+```python
+class Solution:
+    def searchBST(self, root: TreeNode, val: int) -> TreeNode:
+        # 为什么要有返回值: 
+        #   因为搜索到目标节点就要立即return，
+        #   这样才是找到节点就返回（搜索某一条边），如果不加return，就是遍历整棵树了。
 
-题目链接/文章讲解：https://programmercarl.com/0617.%E5%90%88%E5%B9%B6%E4%BA%8C%E5%8F%89%E6%A0%91.html  
-视频讲解：https://www.bilibili.com/video/BV1m14y1Y7JK  
+        if not root or root.val == val: 
+            return root
 
- 700.二叉搜索树中的搜索 
+        if root.val > val: # search left
+            return self.searchBST(root.left, val)
 
-递归和迭代 都可以掌握以下，因为本题比较简单， 了解一下 二叉搜索树的特性
+        if root.val < val: # search right
+            return self.searchBST(root.right, val)
+```
 
-题目链接/文章讲解: https://programmercarl.com/0700.%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%9A%84%E6%90%9C%E7%B4%A2.html  
-视频讲解：https://www.bilibili.com/video/BV1wG411g7sF   
 
- 98.验证二叉搜索树 
+## 验证二叉搜索树 
+```python
+class Solution:
+    def __init__(self):
+        self.vec = []
 
-遇到 搜索树，一定想着中序遍历，这样才能利用上特性。 
 
-但本题是有陷阱的，可以自己先做一做，然后在看题解，看看自己是不是掉陷阱里了。这样理解的更深刻。
+    # 要知道中序遍历下，输出的二叉搜索树节点的数值是有序序列。
 
-题目链接/文章讲解：https://programmercarl.com/0098.%E9%AA%8C%E8%AF%81%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91.html 
-视频讲解：https://www.bilibili.com/video/BV18P411n7Q4  
+    # 有了这个特性，验证二叉搜索树，就相当于变成了判断一个序列是不是递增的了。
+
+    def traversal(self, node:TreeNode):
+        if node is None:
+            return
+        # 中序遍历
+        self.traversal(node.left)
+        self.vec.append(node.val)  # 将二叉搜索树转换为有序数组
+        self.traversal(node.right)
+
+    def isValidBST(self, root):
+        self.vec = []  # 清空数组
+        self.traversal(root)
+        for i in range(1, len(self.vec)):
+            # 注意要小于等于，搜索树里不能有相同元素
+            if self.vec[i] <= self.vec[i - 1]:
+                return False
+        return True
+```
