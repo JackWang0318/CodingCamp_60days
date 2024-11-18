@@ -73,16 +73,17 @@ class Solution:
 
 
 ## 二叉搜索树的最近公共祖先
-
+此处是 二叉搜索树，所以左右子树顺序有迹可循
 ```python
 class Solution:
     def traversal(self, cur, p, q):
         if cur is None:
             return cur
                                                         # 中
+        # 因为不知道p q 谁大 所以都要跟cur比较
         if cur.val > p.val and cur.val > q.val:           # 左
             left = self.traversal(cur.left, p, q)
-            if left is not None:
+            if left is not None: # 搜索到结果直接return 
                 return left
 
         if cur.val < p.val and cur.val < q.val:           # 右
@@ -90,6 +91,8 @@ class Solution:
             if right is not None:
                 return right
 
+        # 剩下的情况，就是cur节点在区间（p.val <= cur.val && cur.val <= q.val）或者 （q.val <= cur.val && cur.val <= p.val）中，
+        # 那么cur就是最近公共祖先了，直接返回cur。
         return cur
 
     def lowestCommonAncestor(self, root, p, q):
