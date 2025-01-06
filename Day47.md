@@ -20,3 +20,46 @@ class Solution:
         return answer
 ```
 
+### 下一个更大元素I
+- 注意nums1是nums2的子集 所以就直接处理Nums2然后再映射到nums1
+```python
+class Solution:
+    def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        result = [-1]*len(nums1)
+        stack = [0]   #储存的是nums2的下标 所以初始是0
+        for i in range(1,len(nums2)): # 所以这里range是从1开始
+            # 情况一情况二
+            if nums2[i]<=nums2[stack[-1]]:
+                stack.append(i)
+            # 情况三
+            else:
+                while len(stack)!=0 and nums2[i]>nums2[stack[-1]]: # 持续比较
+                    if nums2[stack[-1]] in nums1:  # 找nums1中对应下标 收获结果
+                        index = nums1.index(nums2[stack[-1]])
+                        result[index]=nums2[i]
+                    stack.pop() #弹出栈顶元素                  
+                stack.append(i)
+        return result
+```
+
+### 下一个更大元素II
+- 循环数组 用mod
+```python
+class Solution:
+    def nextGreaterElements(self, nums: List[int]) -> List[int]:
+        result = [-1]*len(nums)
+        stack = [0]   #储存的是nums2的下标 所以初始是0
+        for i in range(1,len(nums)*2): # 所以这里range是从1开始
+            # 情况一情况二
+            if i >= len(nums):
+                i = i % (len(nums))
+            if nums[i]<=nums[stack[-1]]:
+                stack.append(i)
+            # 情况三
+            else:
+                while len(stack)!=0 and nums[i]>nums[stack[-1]]: # 持续比较
+                    result[stack[-1]]=nums[i]
+                    stack.pop() #弹出栈顶元素                  
+                stack.append(i)
+        return result
+```
