@@ -228,7 +228,7 @@ if __name__ == "__main__":
 - 从两个边界 逆流而上
 ![image](https://github.com/user-attachments/assets/998f8dc8-5114-4056-b889-36595750676c)
 
-  ```python
+```python
 first = set()
 second = set()
 directions = [[-1, 0], [0, 1], [1, 0], [0, -1]]
@@ -280,9 +280,9 @@ def main():
     for x, y in res:
         print(f"{x} {y}")
     
-    
 if __name__ == "__main__":
     main()
-  ```
+```
 
 ### 建造最大面积岛屿
+- 先用DFS/BFS方式遍历并标记各岛屿的编号及对应面积，然后遍历水的元素，依次统计每个水(如果变成陆地的话)和周围邻接岛屿加起来的面积，存留最大值
