@@ -49,17 +49,22 @@ class Solution:
 ```python
 class Solution:
     def minDistance(self, word1: str, word2: str) -> int:
+        # 创建一个二维dp数组 
+        # dp[i][j]: 表示以下标i-1为结尾的字符串word1，和以下标j-1为结尾的字符串word2，最近编辑距离为dp[i][j]
+        # 为什么是i-1和j-1? ---方便初始化 
         dp = [[0] * (len(word2)+1) for _ in range(len(word1)+1)]
         for i in range(len(word1)+1):
             dp[i][0] = i
         for j in range(len(word2)+1):
             dp[0][j] = j
+        
+        # 那dp[0][0]是什么含义呢？总不能是以下标-1为结尾的A数组吧;
+        # 其实dp[i][j]的定义也就决定着，我们在遍历dp[i][j]的时候i和j都要从1开始。
         for i in range(1, len(word1)+1):
             for j in range(1, len(word2)+1):
-                if word1[i-1] == word2[j-1]:
+                if word1[i-1] == word2[j-1]: # 不操作
                     dp[i][j] = dp[i-1][j-1]
-                else:
-                    # 此处有增删替三个步骤的取min 
+                else: # 增 删 换
                     dp[i][j] = min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]) + 1
         return dp[-1][-1]
 ```
