@@ -98,3 +98,57 @@ if __name__ == "__main__":
     print(result)
 
 ``` 
+
+
+### 堆优化版 dijkstra 
+- 适合稀疏图, 利用邻接表的方式存储图
+- 那么当从 边 的角度出发， 在处理 三部曲里的第一步（选源点到哪个节点近且该节点未被访问过）的时候 ，我们可以不用去遍历所有节点了。而且 直接把 边（带权值）加入到 小顶堆（利用堆来自动排序），那么每次我们从 堆顶里 取出 边 自然就是 距离源点最近的节点所在的边。这样我们就不需要两层for循环来寻找最近的节点了。
+
+```python
+import heapq
+
+class Edge:
+    def __init__(self, to, val):
+        self.to = to
+        self.val = val
+
+def dijkstra(n, m, edges, start, end):
+    grid = [[] for _ in range(n + 1)]
+
+    for p1, p2, val in edges:
+        grid[p1].append(Edge(p2, val))
+
+    minDist = [float('inf')] * (n + 1)
+    visited = [False] * (n + 1)
+
+    pq = []
+    heapq.heappush(pq, (0, start))
+    minDist[start] = 0
+
+    while pq:
+        cur_dist, cur_node = heapq.heappop(pq)
+
+        if visited[cur_node]:
+            continue
+
+        visited[cur_node] = True
+
+        for edge in grid[cur_node]:
+            if not visited[edge.to] and cur_dist + edge.val < minDist[edge.to]:
+                minDist[edge.to] = cur_dist + edge.val
+                heapq.heappush(pq, (minDist[edge.to], edge.to))
+
+    return -1 if minDist[end] == float('inf') else minDist[end]
+
+# 输入
+n, m = map(int, input().split())
+edges = [tuple(map(int, input().split())) for _ in range(m)]
+start = 1  # 起点
+end = n    # 终点
+
+# 运行算法并输出结果
+result = dijkstra(n, m, edges, start, end)
+print(result)
+
+```
+  
