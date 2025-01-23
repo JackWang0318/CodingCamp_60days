@@ -22,7 +22,7 @@ class Solution:
 ```
 
 ## 完全平方数
-```
+```python
 class Solution:
     def numSquares(self, n: int) -> int:
         # 跟零钱兑换 几乎一样 求最少方法数
