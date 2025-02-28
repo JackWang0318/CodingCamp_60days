@@ -1,4 +1,5 @@
 ## 最后一块石头的重量II
+- 2025.2.28: 01背包 分割等和子集的等效变式
 ```python
 class Solution:
     def lastStoneWeightII(self, stones: List[int]) -> int:
@@ -14,7 +15,7 @@ class Solution:
 ```
 
 ## 目标和
-
+- 2025.2.28: 感觉背包问题就主要需要厘清dp数组的下标及含义(一般就是题目直接问的，方案总数，True or False等)，还有什么是背包容量，什么是物品的价值，
 ```python
 class Solution:
     def findTargetSumWays(self, nums: List[int], target: int) -> int:
@@ -36,7 +37,9 @@ class Solution:
 ```
 
 # 一和零
-其实就是重量的维度增加了，就是每个物品(str)有两种重量维度(0的数量,1的数量),
+
+- 2025.2.28: 其实就是物品weight feature的维度增加了，就是每个物品(str)有两种重量维度(0的数量,1的数量)；dp[i][j]:装满i个0和j个1下 (i.e. 背包容量)，最多可以存放的字符串个数,最大子集(value)
+
 ```python
 class Solution:
     def findMaxForm(self, strs: List[str], m: int, n: int) -> int:
@@ -47,6 +50,7 @@ class Solution:
             ones = s.count('1')  # 统计字符串中1的个数
             zeros = s.count('0')  # 统计字符串中0的个数
             # 遍历背包容量且从后向前遍历 (因为此处是状态压缩下的dp数组)
+            # 这里遍历背包容量的两层for循环先后顺序没讲究，都是物品重量的一个维度，先遍历哪个都行！
             for i in range(m, zeros - 1, -1):
                 for j in range(n, ones - 1, -1):
                     dp[i][j] = max(dp[i][j], dp[i - zeros][j - ones] + 1)  # 状态转移方程
