@@ -1,17 +1,24 @@
 ## 平衡二叉树
+- 2025.3.1:
+**这里强调一波概念：
+a. 二叉树节点的深度：指从根节点到该节点的最长简单路径边的条数。
+b. 二叉树节点的高度：指从该节点到叶子节点的最长简单路径边的条数。**
+
+**求二叉树节点深度 应该是前序(中左右) 因为是需要根节点的深度向下返回；同理，求高度就是后序(左右中)，是叶子节点的高度向上返回**
+
 
 ```python
 class Solution:
-    # 求深度差 即求高度差
+    # 求深度差 即求高度差 此处是计算高度 所以是后序处理的逻辑 然后判断差值
     def getHeight(self,node) ->int:
-        # print(f'##cur: {node}\n')
         if not node: return 0 # 叶子结点
+        # 左
         leftHeight = self.getHeight(node.left)
-        # print(f'#{node} LH:{leftHeight}\n')
         if (leftHeight == -1): return -1
         rightHeight = self.getHeight(node.right)
-        # print(f'#{node} RH:{rightHeight}\n')
+        # 右
         if (rightHeight == -1): return -1
+        # 中 
         if (abs(leftHeight - rightHeight) > 1):
             return -1
         else:
@@ -19,7 +26,7 @@ class Solution:
 
     
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
-        if (self.getHeight(root)==-1):
+        if (self.getHeight(root) == -1):
             return False
         else:
             return True
@@ -28,7 +35,7 @@ class Solution:
 
 ## 二叉树的所有路径
 ### 有递归加回溯的思想 因为要遍历所有从根节点出发到达叶子结点的路径
-
+- 2025.3.1
 ```python
 class Solution:
     def traversal(self, cur, path, result):
@@ -37,7 +44,7 @@ class Solution:
         if not cur.left and not cur.right:  # 到达叶子节点
             sPath = '->'.join(map(str, path))
             print(f'# 到叶节点' )
-            result.append(sPath)
+            result.append(Path)
             return
         if cur.left:  # 左孩子不为空
             self.traversal(cur.left, path, result)
