@@ -1,4 +1,8 @@
 ## 组合总和
+- 2025.3.7:
+
+![image](https://github.com/user-attachments/assets/9ccd8819-2d1d-47f9-8932-bc227bfb591a)
+
 注意剪枝操作之前，不能先更新total 因为如果先更新total然后发现要break了 total会被误更新。
 然后剪枝版本 传入的candidates是sorted过的 
 ```python
@@ -7,6 +11,18 @@ class Solution:
         self.result = []
 
     def backtracking(self, candidates, target, total, startindex, path, result):
+        '''
+        回溯递归的方法在candidates[startindex:]数组中找目标和为target的元素
+        Args:
+            candidates: 给定的整数数组 候选者们
+            target: 目标和
+            total: 当前选取的元素的和 用来和target进行比较
+            startindex: 横向遍历的起始index | 注意i和i+1的区别
+            path: 节点路径数组
+            result: 结果数组 一条path作为一个结果
+        Returns:
+            不返回内容 直接对result数组进行修改
+        '''
         if total == target:
             result.append(path[:])
             return
@@ -17,21 +33,22 @@ class Solution:
                 break
             total += candidates[i]
             path.append(candidates[i])
-            self.backtracking(candidates, target, total, i,path,result)
+            self.backtracking(candidates, target, total, i, path, result)  # 这里startindex还是传入i是因为每个元素不限制使用次数
+            # 回溯 回归当纵向递归深度的树层 之后进入for循环继续横向遍历
             total -= candidates[i]
             path.pop()
 
 
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         candidates.sort()  # 需要排序 才能配合剪枝的逻辑
-        self.backtracking(candidates,target, 0,0, [],self.result)
+        self.backtracking(candidates, target, 0,0, [],self.result)
         return self.result
 
 ```
 
 ## 组合总和2
 ![image](https://github.com/user-attachments/assets/262e6928-03f9-49e2-8c2b-1dfbd31c5ab5)
-
+- 2025.3.7: 注意used数组的使用，startindex在for循环 横向树层遍历的 i/i+1的区别
 ```python
 class Solution:
     def __init__(self):
@@ -52,7 +69,7 @@ class Solution:
             used[i] = True
             total += candidates[i]
             path.append(candidates[i])
-            self.backtracking(candidates, target, used, total, i + 1, path, result)
+            self.backtracking(candidates, target, used, total, i + 1, path, result) # 这里startindex就是i+1了
             used[i] = False
             total -= candidates[i]
             path.pop()
