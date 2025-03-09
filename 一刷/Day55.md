@@ -1,7 +1,14 @@
 ### 并查集理论基础
-- 并查集主要有两个功能：
-- 将两个元素添加到一个集合中。
-- 判断两个元素在不在同一个集合
+并查集是一种用于管理元素所属集合的数据结构，实现为一个森林，其中每棵树表示一个集合，树中的节点表示对应集合中的元素。
+顾名思义，并查集支持两种操作：
+- 合并（Union）：合并两个元素所属集合（合并对应的树）
+- 查询（Find）：查询某个元素所属集合（查询对应的树的根节点），这可以用于判断两个元素是否属于同一集合
+
+
+![image](https://github.com/user-attachments/assets/7ac8506e-6ad2-49e5-bf17-ac3146198468)
+![image](https://github.com/user-attachments/assets/c274f1de-1a3d-4a25-ae39-b62fb4ea9c2a)
+![image](https://github.com/user-attachments/assets/3323ca59-ea93-413e-9a48-1006ab4a3ca7)
+
 ### 寻找存在的路径
 - 就是判断source节点和destination节点是否在同一个集合
 ```python
