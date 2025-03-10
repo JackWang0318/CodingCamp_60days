@@ -1,4 +1,6 @@
 ## 中序后序构造二叉树
+- 2025.3.9: 纸笔写了一下构造过程 顺一下
+![image](https://github.com/user-attachments/assets/b4eff2c8-fbb5-426f-ab85-d36a03eb99f5)
 
 ### ATTENTION: 仅已知前序和后序是无法唯一确定二叉树的
 ```python
@@ -62,6 +64,8 @@ class Solution:
 
 ## 路径总和i和ii
 ### i的递归函数需要返回值，因为找到一个符合条件的结果就可以返回True了
+![image](https://github.com/user-attachments/assets/4d9a5108-6de4-44b5-8be3-aa195dae47a0)
+
 ```python
 # Definition for a binary tree node.
 # class TreeNode:
@@ -97,6 +101,8 @@ class Solution:
 ```
 
 ### 路径总和ii要遍历整个树，找到所有路径，所以递归函数不要返回值！
+![image](https://github.com/user-attachments/assets/55f49122-e635-4428-8d6b-2198afd58424)
+
 ```python
 class Solution:
     def __init__(self):
