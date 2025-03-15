@@ -1,4 +1,5 @@
 ## 非递减子序列 
+- 2025.3.14：
 对树层去重和树枝去重 进一步理解了
 ![image](https://github.com/user-attachments/assets/1f3e4909-fc88-4826-8851-0e7acb8aa9c0)
 
@@ -29,6 +30,7 @@ class Solution:
 
 
 ## 全排列
+![image](https://github.com/user-attachments/assets/0525b360-84f0-406a-8957-a624f2296836)
 
 和之前一些题目最大的差别在于 不能用start_index来控制递归位置了，而是通过判断used数组是否使用过来 遍历元素
 ```python
@@ -37,8 +39,6 @@ class Solution:
         if len(path) == len(nums):
             result.append(path[:])  # 注意加[:]
             return # 注意return
-
-
         for i in range(len(nums)):
             if used[i]: #使用过 跳过
                 continue
