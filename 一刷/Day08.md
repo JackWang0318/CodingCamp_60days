@@ -1,5 +1,3 @@
-
-
 ## 字符串
 ### 《代码随想录》字符串：反转字符串
 #### Done on Price Center
@@ -24,7 +22,7 @@ class Solution:
 
 ### 《代码随想录》字符串：反转字符串II
 #### Day8 Q2
-
+- 2025.3.16: 注意几个细节: 字符串是不可以用索引的,因为不可变, 所以先list化,返回的时候再用''.join()转化回来
 ```python
 class Solution:
     def reverseStr(self, s: str, k: int) -> str:
