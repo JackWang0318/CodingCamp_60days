@@ -1,5 +1,7 @@
 ## 不同的子序列
-dp[i][j]: 表示s[0:i-1]中有多少个t[0:j-1]
+- s是主串，t是模式串
+- dp[i][j]: 表示s[0:i-1]中有多少个t[0:j-1]
+
 ![image](https://github.com/user-attachments/assets/b7a057b1-5bac-4034-bb57-7e53eb0df057)
 ![image](https://github.com/user-attachments/assets/f0da66fe-4629-40c3-8ea0-7f1394c027cb)
 
@@ -45,13 +47,13 @@ class Solution:
 
 ## 编辑距离
 ![image](https://github.com/user-attachments/assets/1b1ba910-bbf4-4bd7-b255-a47ffac3120a)
-
+- 2025.3.16：与Jaro字符串相似算法 对比
 ```python
 class Solution:
     def minDistance(self, word1: str, word2: str) -> int:
         # 创建一个二维dp数组 
         # dp[i][j]: 表示以下标i-1为结尾的字符串word1，和以下标j-1为结尾的字符串word2，最近编辑距离为dp[i][j]
-        # 为什么是i-1和j-1? ---方便初始化 
+        # Q:为什么是i-1和j-1? A:方便初始化 
         dp = [[0] * (len(word2)+1) for _ in range(len(word1)+1)]
         for i in range(len(word1)+1):
             dp[i][0] = i
@@ -64,7 +66,10 @@ class Solution:
             for j in range(1, len(word2)+1):
                 if word1[i-1] == word2[j-1]: # 不操作
                     dp[i][j] = dp[i-1][j-1]
-                else: # 增 删 换
+                else: 
+                    # word1删除(等价于word2增加)一个元素: dp[i][j] = dp[i - 1][j] + 1
+                    # word2删除(等价于word1增加)一个元素: dp[i][j] = dp[i][j - 1] + 1
+                    # word1替换word1[i - 1]，使其与word2[j - 1]: dp[i][j] = dp[i-1][j-1] + 1
                     dp[i][j] = min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]) + 1
         return dp[-1][-1]
 ```
