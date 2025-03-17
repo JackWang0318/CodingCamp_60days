@@ -1,5 +1,7 @@
 # 打家劫舍系列 按照家的排列分布 分为三部曲
-
+- 2025.3.16: WI25 quarter finals了，被linear algebra和random processes搞烦躁了 我造！全是数学公式 线代稍微好点 能geometrically和偏application的理解 随机过程 纯恶心人啊 感觉
+- 不扯了 看一下打家劫舍的本质: 本质上是优化问题，需要在一定的约束条件下（如不能连续选择相邻的选项）做出选择，以达到最大化某个目标（如总金额）。
+- I,II,III无非就是约束条件不一样 
 ## I
 ```python
 class Solution:
@@ -9,7 +11,8 @@ class Solution:
         if len(nums) == 1:  # 如果只有一个房屋，返回其金额
             return nums[0]
 
-        # dp[i] 表示考虑0-i号房 操作后可以存储的 最大金额
+        # dp数组含义: dp[i] 表示考虑0-i号房 操作后可以存储的 最大金额
+        # 初始化
         dp = [0] * len(nums)
         dp[0] = nums[0]  # 将dp的第一个元素设置为第一个房屋的金额
         dp[1] = max(nums[0], nums[1])  # 将dp的第二个元素设置为第一二个房屋中的金额较大者
