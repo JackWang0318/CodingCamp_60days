@@ -1,5 +1,5 @@
 # 买卖股票系列 
-
+- 2025.3.17：买卖股票 对第i天进行操作时 的递推
 ## I
 ![image](https://github.com/user-attachments/assets/52b411bc-6029-445d-ad46-0e5dbf7e85f1)
 
