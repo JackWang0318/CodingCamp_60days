@@ -1,24 +1,36 @@
-
 ## 最长递增子序列
+- 2025.3.18：注意区分和连续子序列的区别：
+- 概括来说：不连续递增子序列的跟前0-i 个状态有关，连续递增的子序列只跟前一个状态有关(所以后者可以用贪心来做,可以直接遍历一遍数组)
 ![image](https://github.com/user-attachments/assets/031ca579-bd99-4f96-a414-1981718de9ae)
 
 ```python
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
+        '''
+            子序列的定义;
+            dp[i]表示i之前包括i的以nums[i]结尾的最长递增子序列的长度;
+            dp数组初始化
+            状态转移方程
+        '''
         if len(nums) <= 1:
             return len(nums)
-        dp = [1] * len(nums)
+        dp = [1] * len(nums) # 初始化
         result = 1
         for i in range(1, len(nums)):
             for j in range(0, i):
                 if nums[i] > nums[j]:
-                    dp[i] = max(dp[i], dp[j] + 1)
+                    dp[i] = max(dp[i], dp[j] + 1) 
+                    #这里的 dp[j] + 1 表示在以nums[j]结尾的最长递增子序列长度(dp[j])的基础上，
+                    #加上 nums[i] 形成的新子序列的长度
             result = max(result, dp[i]) #取长的子序列
         return result
 ```
 ## 最长重复子数组
-![image](https://github.com/user-attachments/assets/73f138fe-3295-449e-a44a-c438423f6e11)
+- 注意题目中说的子数组，其实就是连续子序列
+- dp数组含义: dp[i][j] ：以下标i - 1为结尾的nums1，和以下标j - 1为结尾的nums2，最长重复子数组长度为dp[i][j]
+- 注意初始化的时候最开始的dp[0][0]
 
+![image](https://github.com/user-attachments/assets/a7e91d8f-aea2-4b23-9318-ec7a415bad1f)
 ```python
 class Solution:
     def findLength(self, nums1: List[int], nums2: List[int]) -> int:
@@ -26,7 +38,6 @@ class Solution:
         dp = [[0] * (len(nums2) + 1) for _ in range(len(nums1) + 1)]
         # 记录最长公共子数组的长度
         result = 0
-
         # 遍历数组 nums1
         for i in range(1, len(nums1) + 1):
             # 遍历数组 nums2
@@ -43,6 +54,8 @@ class Solution:
 
 ```
 ## 最长公共子序列 / 变式:不相交的线
+- dp含义: dp[i][j]：长度为[0, i - 1]的字符串text1与长度为[0, j - 1]的字符串text2的最长公共子序列为dp[i][j]
+
 ![image](https://github.com/user-attachments/assets/d6ec6e47-7bac-40eb-907a-81009f067f4b)
 
 ```python
